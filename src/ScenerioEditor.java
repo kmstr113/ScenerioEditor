@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.NamedNodeMap;
 import mekhq.campaign.unit.*;
 import mekhq.Version; 
+import java.lang.Integer;
 
 
 //import mekhq.campaign.Campaign;
@@ -17,6 +18,7 @@ import java.io.FileInputStream;
 import java.util.UUID;
 import java.io.*;
 import javax.swing.*;
+import java.math.*;
 
 
 public class ScenerioEditor {
@@ -25,9 +27,10 @@ public class ScenerioEditor {
 	
 	public  ScenerioEditor() {
 		try {			   
+			
 			mFrame = new ScenerioEditorGUI("Scenerio Editor");
 			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document doc = dBuilder.parse(new File("C:\\Users\\jhahn\\eclipse-workspace\\MekHQ\\mekhq-master\\MekHQ\\campaigns\\Fist and Falcon\\test.cpnx"));
+			Document doc = dBuilder.parse(new File("C:\\MekHQ\\campaigns\\Fist and Falcon\\test.cpnx"));
 			Element campaignEle = doc.getDocumentElement();
 	        NodeList nl = campaignEle.getChildNodes();
 	        campaignEle.normalize();
@@ -52,7 +55,7 @@ public class ScenerioEditor {
 	                // Okay, so what element is it?
 	                String xn = wn.getNodeName();
 
-	                if (xn.equalsIgnoreCase("units")) { // This is needed so that the campaign name gets set in retVal
+	                if (xn.equalsIgnoreCase("units")) { 
 	                    processUnitNodes( wn);
 	                }
 	            }
@@ -73,6 +76,7 @@ public class ScenerioEditor {
 	
 	private void processUnitNodes(Node wn) {
         NodeList wList = wn.getChildNodes();
+        int cnt = 0;
         UUID id;
         int oldId;
         String chassis;
@@ -91,10 +95,13 @@ public class ScenerioEditor {
                 // Errr, what should we do here?
                 continue;
             }
+            cnt += 1;
             NamedNodeMap attrs = wn2.getAttributes();
             Node idNode = attrs.getNamedItem("id");
             id = UUID.fromString(idNode.getTextContent());
             mFrame.getUnitPanel().setUID(id.toString());
+            mFrame.getUnitPanel().setCounter(Integer.toString(cnt));
+                        
             // Okay, now load Part-specific fields!
             NodeList nl = wn2.getChildNodes();
 
@@ -104,10 +111,11 @@ public class ScenerioEditor {
                     
                     if (wn3.getNodeName().equalsIgnoreCase("entity")) {
                     	NamedNodeMap eattrs = wn3.getAttributes();
-                    	Node chassisNode = eattrs.getNamedItem("chassis");
-                    	chassis = chassisNode.getTextContent();
-                    	System.out.println(chassis);
-                    	mFrame.getUnitPanel().setChassisType(chassis);
+                    	System.out.println(eattrs.getNamedItem("chassis").getTextContent());
+                    	mFrame.getUnitPanel().setChassisType(eattrs.getNamedItem("chassis").getTextContent());
+                    	mFrame.getUnitPanel().setModel(eattrs.getNamedItem("model").getTextContent());
+                    	mFrame.getUnitPanel().setMType(eattrs.getNamedItem("type").getTextContent());
+                    	mFrame.getUnitPanel().setunitCommander(eattrs.getNamedItem("commander").getTextContent());
                     }
  /*                 if (wn2.getNodeName().equalsIgnoreCase("site")) {
                         site = Integer.parseInt(wn2.getTextContent());
