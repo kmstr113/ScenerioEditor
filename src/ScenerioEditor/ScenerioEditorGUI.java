@@ -1,3 +1,4 @@
+package ScenerioEditor;
 import javax.swing.*;
 import java.awt.*;
 

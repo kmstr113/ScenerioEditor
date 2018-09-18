@@ -1,3 +1,4 @@
+package ScenerioEditor;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
@@ -10,6 +11,7 @@ public class UnitPanel extends JPanel {
 	private JTextField mType = null;
 	private JTextField unitCommander = null;
 	private JTextField cnt = null;
+	private JTextArea Weapons = null;
 	
 	public UnitPanel() {
 		super();
@@ -23,6 +25,15 @@ public class UnitPanel extends JPanel {
 		model = new JTextField(10);
 		mType = new JTextField(10);
 		unitCommander = new JTextField(10);
+		Weapons = new JTextArea(4,40);
+		JScrollPane jsp = new JScrollPane(Weapons);
+		
+		//Weapons Panel
+		JPanel jpw = new JPanel();
+		jpw.setLayout(new GridLayout(0,2));
+		jpw.add(new JLabel("Weapons"));
+		jpw.add(jsp);
+		
 		
 		//Counter
 		JPanel jp0 = new JPanel();
@@ -60,6 +71,7 @@ public class UnitPanel extends JPanel {
 		jp4.add(new JLabel("Unit Commander"));
 		jp4.add(unitCommander);		
 		
+		
 		// add the Jpanels
 		this.add(jp0);
 		this.add(jp);
@@ -67,7 +79,9 @@ public class UnitPanel extends JPanel {
 		this.add(jp2);
 		this.add(jp3);
 		this.add(jp4);
+		this.add(jpw);
 		this.add(j);
+		
 		
 		this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED ));
 		
@@ -96,5 +110,18 @@ public class UnitPanel extends JPanel {
 	
 	public void setCounter(String s) {
 		cnt.setText(s);
+	}
+	
+	public void addWeapon(String s) {
+		Weapons.append(s+"\r\n");
+	}
+	
+	public void LoadUnit(Unit u) {
+		cnt.setText(u.getCnt());
+		uID.setText(u.getUnitID());
+		chassisType.setText(u.getChassisType());
+		model.setText(u.getModel());
+		mType.setText(u.getMType());
+		unitCommander.setText(u.getUnitCommander());
 	}
 }
