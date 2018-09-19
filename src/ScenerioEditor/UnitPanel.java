@@ -123,5 +123,6 @@ public class UnitPanel extends JPanel {
 		model.setText(u.getModel());
 		mType.setText(u.getMType());
 		unitCommander.setText(u.getUnitCommander());
+		Weapons.append(u.getWeapons());
 	}
 }

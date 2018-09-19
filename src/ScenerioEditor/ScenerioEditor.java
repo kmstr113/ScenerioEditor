@@ -27,14 +27,18 @@ public class ScenerioEditor {
 	ScenerioEditorGUI mFrame = null;
 	Version version = null;
 	private Vector<Unit> units = new Vector<Unit>(10,2);
+	private Vector<Mission> missions = new Vector<Mission>(4,2);
 	
+	/*
+	 *  Scenario Editor Constructor
+	 */
 	public  ScenerioEditor() {
 		try {			   
 					
 			mFrame = new ScenerioEditorGUI("Scenerio Editor");
 			mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document doc = dBuilder.parse(new File("C:\\MekHQ\\campaigns\\Fist and Falcon\\test.cpnx"));
+			Document doc = dBuilder.parse(new File("C:\\MekHQ\\campaigns\\Solo\\Solo30270514.cpnx"));
 			Element campaignEle = doc.getDocumentElement();
 	        NodeList nl = campaignEle.getChildNodes();
 	        campaignEle.normalize();
@@ -42,8 +46,7 @@ public class ScenerioEditor {
 			System.out.println(campaignEle.getAttribute("version"));
 			
 			
-	        // we need to iterate through three times, the first time to collect
-	        // any custom units that might not be written yet
+	        // Step through the file to get 
 	        for (int x = 0; x < nl.getLength(); x++) {
 	            Node wn = nl.item(x);
 
@@ -65,51 +68,219 @@ public class ScenerioEditor {
 	                if (xn.equalsIgnoreCase("parts")) { 
 	                    processPartNodes(wn);
 	                }
+	                if (xn.equalsIgnoreCase("missions")) {
+	                	processMissionNodes(wn);
+	                }
 	            }
+	            System.out.println(".");
 	        } 		
-
 		} catch (Exception e) {
 	    	  /*err handling*/
 		}
-		
 		mFrame.getUnitPanel().LoadUnit(getUnitByCnt("1"));
-		
-		
+	}
+	
+	/*
+	 * Process the Mission nodes in the campaign file
+	 */
+	private void processMissionNodes(Node wn){
+        NodeList wList = wn.getChildNodes();
+        int cnt = 0;
+
+        // iterate through the children,
+        for (int x = 0; x < wList.getLength(); x++) {
+            Node wn2 = wList.item(x);
+
+            // If it's not an element node, we ignore it.
+            if (wn2.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            if (!wn2.getNodeName().equalsIgnoreCase("mission")) {
+                continue;
+            }
+            cnt += 1;
+            Mission m = new Mission();
+            
+            NamedNodeMap attrs = wn2.getAttributes();
+            // Mission ID
+            Node idNode = attrs.getNamedItem("id");
+            m.setCnt(idNode.getTextContent());
+            // Mission Type
+            idNode = attrs.getNamedItem("type");
+            m.setMissionType(idNode.getTextContent());
+            
+            // Okay, now load scenario specific fields
+            NodeList nl = wn2.getChildNodes();
+
+            try {
+                for (int y=0; y<nl.getLength(); y++) {
+                    Node wn3 = nl.item(y);
+                    // If it's not an element node, we ignore it.
+                    if (wn3.getNodeType() != Node.ELEMENT_NODE) {
+                        continue;
+                    }
+                    if (wn3.getNodeName().equalsIgnoreCase("name")) {
+                    	m.setMissionName(wn3.getTextContent());                   	
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("desc")) {
+                  		m.setMissionDesc(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("type")) {
+                  		m.setMissionTypeDesc(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("planetId")) {
+                  		m.setPlanetID(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("status")) {
+                  		m.setMissionStatus(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("id")) {
+                  		m.setMissionID(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("scenarios")) {
+                  		processScenarioNodes(wn3);
+                  	}
+                    System.out.println("+");
+                }                
+                System.out.println("Mission: \r\n" + m.toString());
+            } catch (Exception ex) {
+                // Doh!
+                System.err.println( ex.toString() );
+            }  
+            
+        }
 		
 	}
 	
-	public Unit getUnitByCnt(String s) {
-		Unit ul= null;
-		Iterator<Unit> itr = units.iterator();
-		do{
-			ul = itr.next();
-		}while(!s.equals(ul.getCnt()));
-		return ul;
+	/*
+	 * Process the scenarios in the mission in campaign file
+	 */
+	private void processScenarioNodes(Node wn) {
+        NodeList wList = wn.getChildNodes();
+        int cnt = 0;
+
+        // iterate through the children,
+        for (int x = 0; x < wList.getLength(); x++) {
+            Node wn2 = wList.item(x);
+
+            // If it's not an element node, we ignore it.
+            if (wn2.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            if (!wn2.getNodeName().equalsIgnoreCase("scenario")) {
+                continue;
+            }
+            cnt += 1;
+            Scenario m = new Scenario();
+            
+            NamedNodeMap attrs = wn2.getAttributes();
+            // Scenario ID
+            Node idNode = attrs.getNamedItem("id");
+            m.setCnt(idNode.getTextContent());
+            // Mission Type
+            idNode = attrs.getNamedItem("type");
+            m.setType(idNode.getTextContent());
+            
+            // Okay, now load scenario specific fields
+            NodeList nl = wn2.getChildNodes();
+
+            try {
+                for (int y=0; y<nl.getLength(); y++) {
+                    Node wn3 = nl.item(y);
+                    
+                    if (wn3.getNodeName().equalsIgnoreCase("name")) {
+                    	m.setName(wn3.getTextContent());                   	
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("desc")) {
+                  		m.setDesc(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("report")) {
+                  		m.setReport(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("status")) {
+                  		m.setStatus(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("id")) {
+                  		m.setID(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("date")) {
+                  		m.setDate(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("attacker")) {
+                  		m.setAttackers(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("lanceforceid")) {
+                  		m.setLanceForceId(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("lanceRole")) {
+                  		m.setLanceRole(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("terraintype")) {
+                  		m.setTerrainType(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("light")) {
+                  		m.setLight(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("weather")) {
+                  		m.setWeather(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("wind")) {
+                  		m.setWind(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("fog")) {
+                  		m.setFog(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("atmosphere")) {
+                  		m.setAtmosphere(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("gravity")) {
+                  		m.setGravity(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("start")) {
+                  		m.setStart(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("deploymentDelay")) {
+                  		m.setDeploymentDelay(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("mapsize")) {
+                  		m.setMapSize(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("map")) {
+                  		m.setMap(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("lanceCount")) {
+                  		m.setLanceCount(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("rerollsremaining")) {
+                  		m.setRerollsRemaining(wn3.getTextContent());
+                  	}else if (wn3.getNodeName().equalsIgnoreCase("botForceStub")) {
+                  		BotForce bf = new BotForce();
+                  		
+                  		NamedNodeMap nnm = wn3.getAttributes();
+                  		Node nnms = nnm.getNamedItem("name");
+                  		bf.setName(nnms.getTextContent());
+                  		processBotForceEntities(wn3, bf);
+                  		m.addBotForce(bf);
+                  		
+                  		
+                  	}
+                }                
+                //System.out.println("Mission: \r\n" + m.toString());
+            } catch (Exception ex) {
+                // Doh!
+                System.err.println( ex.toString() );
+            }  
+            
+        }		
 	}
 	
-	public Unit getUnitByUnitID(String s) {
-		Unit ul= null;
-		Iterator<Unit> itr = units.iterator();
-		do{
-			ul = itr.next();
-		}while(!s.equals(ul.getUnitID()));
-		return ul;
+	/*
+	 * Process Bot Force Entities in campaign file 
+	 * add entities to the botforce passed to it
+	 */
+	public void processBotForceEntities(Node wn,BotForce b) {
+        NodeList wList = wn.getChildNodes();
+        int cnt = 0;
+
+        // iterate through the children,
+        for (int x = 0; x < wList.getLength(); x++) {
+            Node wn2 = wList.item(x);
+
+            try {
+                    if (wn2.getNodeName().equalsIgnoreCase("entityStub")) {
+                    	cnt += 1;                    
+                    	BotEntity be = new BotEntity();
+                    	be.setID(Integer.toString(cnt));
+                    	be.setName(wn2.getTextContent());  
+                    	b.addBotEntity(be);
+                  	}                
+                //System.out.println("Mission: \r\n" + m.toString());
+            } catch (Exception ex) {
+                // Doh!
+                System.err.println( ex.toString() );
+            }  
+            		
+        }
 	}
 	
-	public void replaceUnit(Unit u) {
-		Unit ul= null;
-		int cnt = 0;
-		Iterator<Unit> itr = units.iterator();
-		while(itr.hasNext()) {
-			cnt++;
-			ul = itr.next();
-			if(u.getCnt().equals(ul.getCnt())) {
-				units.set(cnt, u);	
-			}
-		}
-		
-	}
-	
+	/* 
+	 * Process the Units in the Campaign File
+	 */
 	private void processUnitNodes(Node wn) {
         NodeList wList = wn.getChildNodes();
         int cnt = 0;
@@ -165,6 +336,10 @@ public class ScenerioEditor {
             }         
         }
     }	
+	
+	/*
+	 * Process the parts for the Units
+	 */
 	private void processPartNodes(Node wn) {
         NodeList wList = wn.getChildNodes();
         int cnt = 0;
@@ -202,6 +377,7 @@ public class ScenerioEditor {
 	                    
 	                    if (wn3.getNodeName().equalsIgnoreCase("name")) {
 	                    	wpn = wn3.getTextContent();
+	                    	System.out.println("In ProcessPartNodes : " + wpn);
 	                  	}else if (wn3.getNodeName().equalsIgnoreCase("unitId")) {
 	                  		unitId = wn3.getTextContent();
 	                  	}
@@ -218,8 +394,54 @@ public class ScenerioEditor {
         }
 	}
 	
+	/*
+	 * get unit objectfrom units vector by Cnt number 
+	 */
+	public Unit getUnitByCnt(String s) {
+		Unit ul= null;
+		Iterator<Unit> itr = units.iterator();
+		do{
+			ul = itr.next();
+		}while(!s.equals(ul.getCnt()));
+		return ul;
+	}
 	
+	/*
+	 * get unit object from vector by unique ID
+	 */
+	public Unit getUnitByUnitID(String s) {
+		Unit ul= null;
+		Iterator<Unit> itr = units.iterator();
+		do{
+			ul = itr.next();
+		}while(!s.equals(ul.getUnitID()));
+		return ul;
+	}
+	
+	/*
+	 * helper method to replace a unit object
+	 * once it has been updated or modified in 
+	 * some way
+	 */
+	public void replaceUnit(Unit u) {
+		Unit ul= null;
+		int cnt = 0;
+		try {
+			Iterator<Unit> itr = units.iterator();
+			while(itr.hasNext()) {
+				ul = itr.next();
+				if(u.getCnt().equals(ul.getCnt())) {
+					units.set(cnt, u);	
+				}
+				cnt++;
+			}
+		}catch(Exception e) {
+			System.err.println("Inside ReplaceUnit :" +e.toString());
+		}
+		
+	}
 
+	
 	public static void main(String[] args){
 		ScenerioEditor s = new ScenerioEditor();
 	}   
