@@ -36,13 +36,18 @@ public class ScenarioEditor {
 	 *  Scenario Editor Constructor
 	 */
 	public  ScenarioEditor() {
+		// value returned by FileChooser
+		int returnVal = 0;
 		try {			   
 					
 			mFrame = new ScenarioEditorGUI("Scenario Editor", this);
 			mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			JFileChooser jfc = new JFileChooser();
-			int returnVal = jfc.showOpenDialog(mFrame);
+			returnVal = jfc.showOpenDialog(mFrame);
+			if(returnVal == 1) {
+				System.err.println(returnVal);
+			}
 			String sfn = jfc.getCurrentDirectory() + "\\" + jfc.getSelectedFile().getName();
 			Document doc = dBuilder.parse(new File(sfn));			
 //			Document doc = dBuilder.parse(new File("C:\\MekHQ\\campaigns\\Solo\\Solo30270514.cpnx"));
@@ -83,10 +88,12 @@ public class ScenarioEditor {
 	        } 		
 		} catch (Exception e) {
 	    	  /*err handling*/
+			System.err.println(e.toString());
 		}
-		mFrame.getUnitPanel().LoadUnit(getUnitByCnt("1"));
-		mFrame.getScenarioPanel().loadScenario(getScenarioByID(Integer.toString(getMinimumScenarioID())));
-		
+		if(returnVal == 0) {
+			mFrame.getUnitPanel().LoadUnit(getUnitByCnt("1"));
+			mFrame.getScenarioPanel().loadScenario(getScenarioByID(Integer.toString(getMinimumScenarioID())));
+		}
 	}
 	
 	/*
