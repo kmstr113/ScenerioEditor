@@ -1,4 +1,4 @@
-package ScenerioEditor;
+package ScenarioEditor;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,9 +22,11 @@ import javax.swing.*;
 import java.math.*;
 import java.util.Vector;
 import java.util.List;
+import javax.swing.JFileChooser;
+import java.util.NoSuchElementException;
 
-public class ScenerioEditor {
-	ScenerioEditorGUI mFrame = null;
+public class ScenarioEditor {
+	ScenarioEditorGUI mFrame = null;
 	Version version = null;
 	private Vector<Unit> units = new Vector<Unit>(10,2);
 	private Vector<Mission> missions = new Vector<Mission>(4,2);
@@ -33,13 +35,17 @@ public class ScenerioEditor {
 	/*
 	 *  Scenario Editor Constructor
 	 */
-	public  ScenerioEditor() {
+	public  ScenarioEditor() {
 		try {			   
 					
-			mFrame = new ScenerioEditorGUI("Scenerio Editor", this);
+			mFrame = new ScenarioEditorGUI("Scenario Editor", this);
 			mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document doc = dBuilder.parse(new File("C:\\MekHQ\\campaigns\\Solo\\Solo30270514.cpnx"));
+			JFileChooser jfc = new JFileChooser();
+			int returnVal = jfc.showOpenDialog(mFrame);
+			String sfn = jfc.getCurrentDirectory() + "\\" + jfc.getSelectedFile().getName();
+			Document doc = dBuilder.parse(new File(sfn));			
+//			Document doc = dBuilder.parse(new File("C:\\MekHQ\\campaigns\\Solo\\Solo30270514.cpnx"));
 			Element campaignEle = doc.getDocumentElement();
 	        NodeList nl = campaignEle.getChildNodes();
 	        campaignEle.normalize();
@@ -401,10 +407,16 @@ public class ScenerioEditor {
 	 */
 	public Unit getUnitByCnt(String s) {
 		Unit ul= null;
-		Iterator<Unit> itr = units.iterator();
-		do{
-			ul = itr.next();
-		}while(!s.equals(ul.getCnt()));
+		try {
+			Iterator<Unit> itr = units.iterator();
+			do{
+				ul = itr.next();
+			}while(!s.equals(ul.getCnt()));
+		}catch(NoSuchElementException nsee) {
+			return new Unit();
+		}catch(Exception e) {
+			
+		}
 		return ul;
 	}
 	
@@ -455,10 +467,16 @@ public class ScenerioEditor {
 	 */
 	public Scenario getScenarioByID(String s) {
 		Scenario ss = null;
-		Iterator<Scenario> itr = scenarios.iterator();
-		do {
-			  ss = itr.next();
-		}while(!s.equals(ss.getCnt()));
+		try {
+			Iterator<Scenario> itr = scenarios.iterator();
+			do {
+				  ss = itr.next();
+			}while(!s.equals(ss.getCnt()));
+		}catch(NoSuchElementException nsee) {
+			return new Scenario();
+		}catch(Exception e) {
+			
+		}
 		return ss;
 	}
 	
@@ -475,6 +493,7 @@ public class ScenerioEditor {
 	public int getMinimumScenarioID() {
 		int i = 1000;
 		int v = 0;
+		try {
 		Scenario ss = null;
 		Iterator<Scenario> itr = scenarios.iterator();
 		do {
@@ -484,6 +503,11 @@ public class ScenerioEditor {
 				  i = v;
 			  }
 		}while(itr.hasNext());
+		}catch(NoSuchElementException nsee) {
+			return i;
+		}catch (Exception e) {
+			
+		}
 		return i;
 	}
 	
@@ -508,7 +532,7 @@ public class ScenerioEditor {
 	
 	
 	public static void main(String[] args){
-		ScenerioEditor s = new ScenerioEditor();
+		ScenarioEditor s = new ScenarioEditor();
 	}   
 		   
 

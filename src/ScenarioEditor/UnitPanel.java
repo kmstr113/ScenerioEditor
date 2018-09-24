@@ -1,4 +1,4 @@
-package ScenerioEditor;
+package ScenarioEditor;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.Event;
@@ -14,9 +14,9 @@ public class UnitPanel extends JPanel {
 	private JTextField unitCommander = null;
 	private JTextField cnt = null;
 	private JTextArea Weapons = null;
-	private ScenerioEditorGUI SEG = null;
+	private ScenarioEditorGUI SEG = null;
 	
-	public UnitPanel(ScenerioEditorGUI seg) {
+	public UnitPanel(ScenarioEditorGUI seg) {
 		super();
 		SEG = seg;
 		JButton j = new JButton("Next");
@@ -120,10 +120,10 @@ public class UnitPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int x = new Integer(cnt.getText()).intValue() + 1;
-				if (x > SEG.getScenerioEditor().getUnitsSize()) {
+				if (x > SEG.getScenarioEditor().getUnitsSize()) {
 					x = 1;
 				}
-				SEG.getUnitPanel().LoadUnit(SEG.getScenerioEditor().getUnitByCnt(Integer.toString(x)));
+				SEG.getUnitPanel().LoadUnit(SEG.getScenarioEditor().getUnitByCnt(Integer.toString(x)));
 			}
 		});
 		
@@ -133,9 +133,9 @@ public class UnitPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				int x = new Integer(cnt.getText()).intValue() - 1;
 				if (x < 1 ) {
-					x =  SEG.getScenerioEditor().getUnitsSize();
+					x =  SEG.getScenarioEditor().getUnitsSize();
 				}
-				SEG.getUnitPanel().LoadUnit(SEG.getScenerioEditor().getUnitByCnt(Integer.toString(x)));
+				SEG.getUnitPanel().LoadUnit(SEG.getScenarioEditor().getUnitByCnt(Integer.toString(x)));
 			}
 		});
 	}
@@ -183,7 +183,7 @@ public class UnitPanel extends JPanel {
 		Weapons.setText("");
 	}
 	
-	public ScenerioEditorGUI getScenerioEditorGUI() {
+	public ScenarioEditorGUI getScenarioEditorGUI() {
 		return SEG;
 	}
 }

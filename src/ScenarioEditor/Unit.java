@@ -1,4 +1,4 @@
-package ScenerioEditor;
+package ScenarioEditor;
 
 
 

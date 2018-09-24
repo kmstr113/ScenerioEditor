@@ -1,4 +1,4 @@
-package ScenerioEditor;
+package ScenarioEditor;
 
 public class BotEntity {
 	private String id = "";

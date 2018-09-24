@@ -1,4 +1,4 @@
-package ScenerioEditor;
+package ScenarioEditor;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -14,7 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 
 public class ScenarioPanel extends JPanel{
-	private ScenerioEditorGUI SEG = null;
+	private ScenarioEditorGUI SEG = null;
 	private JTextField id = null;
 	private JTextField type = null;
 	private JTextField name = null;
@@ -42,7 +42,7 @@ public class ScenarioPanel extends JPanel{
 	
 	
 	
-	public ScenarioPanel(ScenerioEditorGUI se) {
+	public ScenarioPanel(ScenarioEditorGUI se) {
 		super();
 		SEG = se;
 		JButton n = new JButton("Next");
@@ -311,10 +311,10 @@ public class ScenarioPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int x = new Integer(id.getText()).intValue() + 1;
-				if (x > SEG.getScenerioEditor().getMaximumScenarioID()) {
+				if (x > SEG.getScenarioEditor().getMaximumScenarioID()) {
 					x = 1;
 				}
-				SEG.getScenarioPanel().loadScenario(SEG.getScenerioEditor().getScenarioByID(Integer.toString(x)));
+				SEG.getScenarioPanel().loadScenario(SEG.getScenarioEditor().getScenarioByID(Integer.toString(x)));
 			}
 		});
 		
@@ -324,9 +324,9 @@ public class ScenarioPanel extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				int x = new Integer(id.getText()).intValue() - 1;
 				if (x < 1 ) {
-					x =  SEG.getScenerioEditor().getMaximumScenarioID();
+					x =  SEG.getScenarioEditor().getMaximumScenarioID();
 				}
-				SEG.getScenarioPanel().loadScenario(SEG.getScenerioEditor().getScenarioByID(Integer.toString(x)));
+				SEG.getScenarioPanel().loadScenario(SEG.getScenarioEditor().getScenarioByID(Integer.toString(x)));
 			}
 		});		
 		
@@ -455,7 +455,7 @@ public class ScenarioPanel extends JPanel{
 	
 	
 	
-	public ScenerioEditorGUI getScenerioEditorGUI() {
+	public ScenarioEditorGUI getScenarioEditorGUI() {
 		return SEG;
 	}
 	

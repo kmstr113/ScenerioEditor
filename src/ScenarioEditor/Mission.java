@@ -1,4 +1,4 @@
-package ScenerioEditor;
+package ScenarioEditor;
 
 import java.util.Iterator;
 import java.util.Vector;

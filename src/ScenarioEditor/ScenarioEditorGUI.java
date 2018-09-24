@@ -1,14 +1,14 @@
-package ScenerioEditor;
+package ScenarioEditor;
 import javax.swing.*;
 import java.awt.*;
 
-public class ScenerioEditorGUI extends JFrame{
+public class ScenarioEditorGUI extends JFrame{
 	private UnitPanel up = null;
 	private ScenarioPanel sp = null;
-	private ScenerioEditor scenerioeditor = null;
+	private ScenarioEditor scenerioeditor = null;
 	private JTabbedPane JTP = null;
 	
-	public ScenerioEditorGUI(String s, ScenerioEditor se) {
+	public ScenarioEditorGUI(String s, ScenarioEditor se) {
 		super(s);
 		this.setLayout(new BorderLayout());
 		this.setSize(640, 480);
@@ -41,7 +41,7 @@ public class ScenerioEditorGUI extends JFrame{
 		return sp;
 	}
 	
-	public ScenerioEditor getScenerioEditor() {
+	public ScenarioEditor getScenarioEditor() {
 		return scenerioeditor;
 	}
 }
