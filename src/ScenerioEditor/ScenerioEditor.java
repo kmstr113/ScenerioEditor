@@ -28,6 +28,7 @@ public class ScenerioEditor {
 	Version version = null;
 	private Vector<Unit> units = new Vector<Unit>(10,2);
 	private Vector<Mission> missions = new Vector<Mission>(4,2);
+	private Vector<Scenario> scenarios = new Vector<Scenario>(4,2);
 	
 	/*
 	 *  Scenario Editor Constructor
@@ -35,7 +36,7 @@ public class ScenerioEditor {
 	public  ScenerioEditor() {
 		try {			   
 					
-			mFrame = new ScenerioEditorGUI("Scenerio Editor");
+			mFrame = new ScenerioEditorGUI("Scenerio Editor", this);
 			mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = dBuilder.parse(new File("C:\\MekHQ\\campaigns\\Solo\\Solo30270514.cpnx"));
@@ -78,6 +79,8 @@ public class ScenerioEditor {
 	    	  /*err handling*/
 		}
 		mFrame.getUnitPanel().LoadUnit(getUnitByCnt("1"));
+		mFrame.getScenarioPanel().loadScenario(getScenarioByID(Integer.toString(getMinimumScenarioID())));
+		
 	}
 	
 	/*
@@ -236,10 +239,9 @@ public class ScenerioEditor {
                   		bf.setName(nnms.getTextContent());
                   		processBotForceEntities(wn3, bf);
                   		m.addBotForce(bf);
-                  		
-                  		
                   	}
-                }                
+                }
+                scenarios.add(m);
                 //System.out.println("Mission: \r\n" + m.toString());
             } catch (Exception ex) {
                 // Doh!
@@ -440,7 +442,70 @@ public class ScenerioEditor {
 		}
 		
 	}
+	
+	/*
+	 * get size of Units
+	 */
+	public int getUnitsSize() {
+		return units.size();
+	}
 
+	/*
+	 * get scenario object by  id
+	 */
+	public Scenario getScenarioByID(String s) {
+		Scenario ss = null;
+		Iterator<Scenario> itr = scenarios.iterator();
+		do {
+			  ss = itr.next();
+		}while(!s.equals(ss.getCnt()));
+		return ss;
+	}
+	
+	/*
+	 * get scenario object by  id
+	 */
+	public int getScenarioSize() {
+		return scenarios.size();
+	}
+	
+	/*
+	 * get minimum ID of scenerio in scenerios
+	 */
+	public int getMinimumScenarioID() {
+		int i = 1000;
+		int v = 0;
+		Scenario ss = null;
+		Iterator<Scenario> itr = scenarios.iterator();
+		do {
+			  ss = itr.next();
+			  v = new Integer(ss.getCnt()).intValue();
+			  if(i > v) {
+				  i = v;
+			  }
+		}while(itr.hasNext());
+		return i;
+	}
+	
+	/*
+	 * get maximum ID of scenerio in scenerios
+	 */
+	public int getMaximumScenarioID() {
+		int i = 0;
+		int v = 0;
+		Scenario ss = null;
+		Iterator<Scenario> itr = scenarios.iterator();
+		do {
+			  ss = itr.next();
+			  v = new Integer(ss.getCnt()).intValue();
+			  if(i < v) {
+				  i = v;
+			  }
+		}while(itr.hasNext());
+		return i;
+	}
+		
+	
 	
 	public static void main(String[] args){
 		ScenerioEditor s = new ScenerioEditor();

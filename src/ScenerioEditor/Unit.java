@@ -10,9 +10,9 @@ public class Unit {
 	private String unitCommander = "";
 	private String cnt = "";
 	private String Weapons = "";
-	
-	public Unit() {
 		
+	public Unit() {
+	
 	}
 	
 	public void setUnitID(String s) {
@@ -67,6 +67,7 @@ public class Unit {
 		Weapons = Weapons + s+ "\r\n";
 	}
 	
+
 	public String getWeapons() {
 		return Weapons;
 	}
