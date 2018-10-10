@@ -5,7 +5,7 @@ import java.awt.*;
 public class ScenarioEditorGUI extends JFrame{
 	private UnitPanel up = null;
 	private ScenarioPanel sp = null;
-	private ScenarioEditor scenerioeditor = null;
+	private ScenarioEditor SE = null;
 	private JTabbedPane JTP = null;
 	
 	public ScenarioEditorGUI(String s, ScenarioEditor se) {
@@ -13,7 +13,7 @@ public class ScenarioEditorGUI extends JFrame{
 		this.setLayout(new BorderLayout());
 		this.setSize(640, 480);
 		JTP = new JTabbedPane();
-		scenerioeditor = se;
+		SE = se;
 		
 		//add tabbed Pane to Frame
 		this.add(JTP,BorderLayout.CENTER);
@@ -42,6 +42,6 @@ public class ScenarioEditorGUI extends JFrame{
 	}
 	
 	public ScenarioEditor getScenarioEditor() {
-		return scenerioeditor;
+		return SE;
 	}
 }

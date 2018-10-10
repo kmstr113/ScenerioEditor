@@ -5,6 +5,11 @@ import javax.swing.JComboBox;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -40,13 +45,15 @@ public class ScenarioPanel extends JPanel{
 	private JTextField rerollsRemaining = null;
 	private JTextArea botForceStub = null;
 	private JComboBox type = null;
+	private Vector<String[]>sn = new Vector<String[]>();
 	
 	
 	
 	
-	public ScenarioPanel(ScenarioEditorGUI se) {
+	public ScenarioPanel(ScenarioEditorGUI seg) {
 		super();
-		SEG = se;
+		SEG = seg;
+		sn = (SEG.getScenarioEditor()).getScenarioNames();
 		JButton n = new JButton("Next");
 		JButton p = new JButton("Prev");
 		
@@ -432,7 +439,11 @@ public class ScenarioPanel extends JPanel{
 	
 	private JComboBox buildType() {
 		JComboBox jcb = new JComboBox();
-		
+		Iterator i = sn.iterator();
+		while(i.hasNext()) {
+			String[] s = (String[])i.next();
+			jcb.addItem(s[1]);
+		}
 		return jcb;
 	}
 	

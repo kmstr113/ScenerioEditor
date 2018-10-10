@@ -37,7 +37,7 @@ public class ScenarioEditor {
 	private Vector<Unit> units = new Vector<Unit>(10,2);
 	private Vector<Mission> missions = new Vector<Mission>(4,2);
 	private Vector<Scenario> scenarios = new Vector<Scenario>(4,2);
-    private Map<Integer,String[]> ScenarioNames = new HashMap<Integer,String[]>();
+    private Vector<String[]> ScenarioNames = new Vector<String[]>(4,2);
 	
 	/*
 	 *  Scenario Editor Constructor
@@ -109,72 +109,51 @@ public class ScenarioEditor {
 		}
 	}
 	
-	
+	public Vector<String[]> getScenarioNames() {
+		return ScenarioNames;
+	}
 	private void listOfScenarios() {
-		String[] s = new String[2];
-		s[0] = "AceDuel";
-		s[1] = "mekhq.campaign.mission.atb.scenario.AceDuelBuiltInScenario";
-		ScenarioNames.put(1,s);
-		s[0]="AlliedTraitors";
-		s[1] = "mekhq.campaign.mission.atb.scenario.AlliedTraitorsBuiltInScenario";
-		ScenarioNames.put(2,s);
-		s[0] ="AllyRescue";
-		s[1] = "mekhq.campaign.mission.atb.scenario.AllyRescueBuiltInScenario";
-		ScenarioNames.put(3,s);
-		s[0] = "Ambush";
-		s[1] ="mekhq.campaign.mission.atb.scenario.AmbushBuiltInScenario";
-		ScenarioNames.put(4,s);
-		s[0] = "BaseAttack";
-		s[1] = "mekhq.campaign.mission.atb.scenario.BaseAttackBuiltInScenario";
-		ScenarioNames.put(5,s);
-		s[0] = "Breakthrough";
-		s[1] = "mekhq.campaign.mission.atb.scenario.BreakthroughBuiltInScenario";
-		ScenarioNames.put(6,s);
-		s[0] = "Chase";
-		s[1] = "mekhq.campaign.mission.atb.scenario.ChaseBuiltInScenario";
-		ScenarioNames.put(7,s);
-		s[0] = "CivilianHelp";
-		s[1] ="mekhq.campaign.mission.atb.scenario.CivilianHelpBuiltInScenario";
-		ScenarioNames.put(8,s);
-		s[0] = "CivilianRiot";
-		s[1] = "mekhq.campaign.mission.atb.scenario.CivilianRiotBuiltInScenario";
-		ScenarioNames.put(9,s);
-		s[0] = "ConvoyAttack";
-		s[1] = "mekhq.campaign.mission.atb.scenario.ConvoyAttackBuiltInScenario";
-		ScenarioNames.put(10,s);
-		s[0] = "Extraction";
-		s[1] = "mekhq.campaign.mission.atb.scenario.ExtractionBuiltInScenario";
-		ScenarioNames.put(11,s);
-		s[0] = "HideAndSeek";
-		s[1] = "mekhq.campaign.mission.atb.scenario.HideAndSeekBuiltInScenario";
-		ScenarioNames.put(12,s);
-		s[0] = "HoldTheLine";
-		s[1] = "mekhq.campaign.mission.atb.scenario.HoldTheLineBuiltInScenario";
-		ScenarioNames.put(13,s);
-		s[0] = "OfficerDual";
-		s[1] = "mekhq.campaign.mission.atb.scenario.OfficerDualBuiltInScenario";
-		ScenarioNames.put(14,s);
-		s[0] = "PirateFreeForAll";
-		s[1] = "mekhq.campaign.mission.atb.scenario.PirateFreeForAllBuiltInScenario";
-		ScenarioNames.put(15,s);
-		s[0] = "PrisonBreak";
-		s[1] = "mekhq.campaign.mission.atb.scenario.PrisonBreakBuiltInScenario";
-		ScenarioNames.put(16,s);
-		s[0] = "Probe";
-		s[1] = "mekhq.campaign.mission.atb.scenario.ProbeBuiltInScenario";
-		ScenarioNames.put(17,s);
-		s[0] = "ReconRaid";
-		s[1] =  "mekhq.campaign.mission.atb.scenario.ReconRaidBuiltInScenario";
-		ScenarioNames.put(18,s);
-		s[0] = "StandUp";
-		s[1] = "mekhq.campaign.mission.atb.scenario.StandUpBuiltInScenario";
-		ScenarioNames.put(19,s);
-		s[0] = "StarLeagueCache1";
-		s[1] = "mekhq.campaign.mission.atb.scenario.StarLeagueCache1BuiltInScenario";
-		ScenarioNames.put(20,s);
-		s[0] = "StarLeagueCache2";
-		s[1] = "mekhq.campaign.mission.atb.scenario.StarLeagueCache2BuiltInScenario";
-		ScenarioNames.put(21,s);
+		ScenarioNames.add(new String[] { "AceDuel", "mekhq.campaign.mission.atb.scenario.AceDuelBuiltInScenario"});
+		
+		ScenarioNames.add(new String[] { "AlliedTraitors", "mekhq.campaign.mission.atb.scenario.AlliedTraitorsBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "AllyRescue", "mekhq.campaign.mission.atb.scenario.AllyRescueBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "Ambush", "mekhq.campaign.mission.atb.scenario.AmbushBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "BaseAttack", "mekhq.campaign.mission.atb.scenario.BaseAttackBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "Breakthrough", "mekhq.campaign.mission.atb.scenario.BreakthroughBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "Chase", "mekhq.campaign.mission.atb.scenario.ChaseBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "CivilianHelp","mekhq.campaign.mission.atb.scenario.CivilianHelpBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "CivilianRiot", "mekhq.campaign.mission.atb.scenario.CivilianRiotBuiltInScenario"});
+		
+		ScenarioNames.add(new String[] { "ConvoyAttack", "mekhq.campaign.mission.atb.scenario.ConvoyAttackBuiltInScenario"});
+		
+		ScenarioNames.add(new String[] { "Extraction", "mekhq.campaign.mission.atb.scenario.ExtractionBuiltInScenario"});
+		
+		ScenarioNames.add(new String[] { "HideAndSeek", "mekhq.campaign.mission.atb.scenario.HideAndSeekBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "HoldTheLine", "mekhq.campaign.mission.atb.scenario.HoldTheLineBuiltInScenario"});
+		
+		ScenarioNames.add(new String[] { "OfficerDual", "mekhq.campaign.mission.atb.scenario.OfficerDualBuiltInScenario"});
+		
+		ScenarioNames.add(new String[] { "PirateFreeForAll", "mekhq.campaign.mission.atb.scenario.PirateFreeForAllBuiltInScenario"});
+		
+		ScenarioNames.add(new String[] { "PrisonBreak", "mekhq.campaign.mission.atb.scenario.PrisonBreakBuiltInScenario"});
+		
+		ScenarioNames.add(new String[] { "Probe", "mekhq.campaign.mission.atb.scenario.ProbeBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "ReconRaid", "mekhq.campaign.mission.atb.scenario.ReconRaidBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "StandUp", "mekhq.campaign.mission.atb.scenario.StandUpBuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "StarLeagueCache1", "mekhq.campaign.mission.atb.scenario.StarLeagueCache1BuiltInScenario"});
+
+		ScenarioNames.add(new String[] { "StarLeagueCache2", "mekhq.campaign.mission.atb.scenario.StarLeagueCache2BuiltInScenario"});
 	}
 	
 	
