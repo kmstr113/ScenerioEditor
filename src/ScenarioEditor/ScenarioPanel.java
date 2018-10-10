@@ -44,7 +44,7 @@ public class ScenarioPanel extends JPanel{
 	private JTextField lanceCount = null;
 	private JTextField rerollsRemaining = null;
 	private JTextArea botForceStub = null;
-	private JComboBox type = null;
+	private JComboBox<String> type = null;
 	private Vector<String[]>sn = new Vector<String[]>();
 	
 	
@@ -437,9 +437,9 @@ public class ScenarioPanel extends JPanel{
 		botForceStub.setText("");
 	}
 	
-	private JComboBox buildType() {
-		JComboBox jcb = new JComboBox();
-		Iterator i = sn.iterator();
+	private JComboBox<String> buildType() {
+		JComboBox<String> jcb = new JComboBox<String>();
+		Iterator<String[]> i = sn.iterator();
 		while(i.hasNext()) {
 			String[] s = (String[])i.next();
 			jcb.addItem(s[1]);
