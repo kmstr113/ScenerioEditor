@@ -1,6 +1,7 @@
 package ScenarioEditor;
 
 import java.awt.Color;
+import javax.swing.JComboBox;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +17,7 @@ import javax.swing.JScrollPane;
 public class ScenarioPanel extends JPanel{
 	private ScenarioEditorGUI SEG = null;
 	private JTextField id = null;
-	private JTextField type = null;
+//	private JTextField type = null;
 	private JTextField name = null;
 	private JTextField desc = null;
 	private JTextField status = null;
@@ -38,6 +39,7 @@ public class ScenarioPanel extends JPanel{
 	private JTextField lanceCount = null;
 	private JTextField rerollsRemaining = null;
 	private JTextArea botForceStub = null;
+	private JComboBox type = null;
 	
 	
 	
@@ -52,7 +54,7 @@ public class ScenarioPanel extends JPanel{
 		
 		// build all the elements
 		id = new JTextField(10);
-		type = new JTextField(10);
+		type = buildType();
 		name = new JTextField(10);
 		desc = new JTextField(10);
 		status = new JTextField(10);
@@ -94,8 +96,8 @@ public class ScenarioPanel extends JPanel{
 		JPanel jp1 = new JPanel();
 		jp1.setLayout(new GridLayout(0,2));
 		jp1.add(new JLabel("Type"));
-		type.setEnabled(false);
-		type.setDisabledTextColor(Color.black);
+		//type.setEnabled(false);
+		//type.setDisabledTextColor(Color.black);
 		jp1.add(type);
 		
 		//name
@@ -337,7 +339,7 @@ public class ScenarioPanel extends JPanel{
 	}
 	
 	public void setType(String s) {
-		type.setText(s);
+		type.setSelectedItem(s);
 	}
 	
 	public void setNName(String s) {
@@ -428,9 +430,15 @@ public class ScenarioPanel extends JPanel{
 		botForceStub.setText("");
 	}
 	
+	private JComboBox buildType() {
+		JComboBox jcb = new JComboBox();
+		
+		return jcb;
+	}
+	
 	public void loadScenario(Scenario s) {
 		id.setText(s.getID());
-		type.setText(s.getType());
+		type.setSelectedItem(s.getType());
 		name.setText(s.getName());
 		desc.setText(s.getDesc());
 		status.setText(s.getStatus());

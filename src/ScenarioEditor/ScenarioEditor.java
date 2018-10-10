@@ -2,7 +2,7 @@ package ScenarioEditor;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.*;
+//import javax.xml.parsers.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -12,16 +12,22 @@ import mekhq.Version;
 import java.lang.Integer;
 import java.util.Iterator;
 
+import mekhq.campaign.mission.atb.scenario.*;
+import mekhq.campaign.mission.AtBScenario;
+import mekhq.campaign.mission.atb.AtBScenarioFactory;
+//import mekhq.campaign.mission.Scenario;
 //import mekhq.campaign.Campaign;
 //import megamek.MegaMek;
 //import megameklab.com.*;
-import java.io.FileInputStream;
+//import java.io.FileInputStream;
 import java.util.UUID;
 import java.io.*;
 import javax.swing.*;
-import java.math.*;
+//import java.math.*;
 import java.util.Vector;
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
 import javax.swing.JFileChooser;
 import java.util.NoSuchElementException;
 
@@ -31,6 +37,7 @@ public class ScenarioEditor {
 	private Vector<Unit> units = new Vector<Unit>(10,2);
 	private Vector<Mission> missions = new Vector<Mission>(4,2);
 	private Vector<Scenario> scenarios = new Vector<Scenario>(4,2);
+    private Map<Integer,String[]> ScenarioNames = new HashMap<Integer,String[]>();
 	
 	/*
 	 *  Scenario Editor Constructor
@@ -39,18 +46,24 @@ public class ScenarioEditor {
 		// value returned by FileChooser
 		int returnVal = 0;
 		try {			   
-					
+			listOfScenarios();
+			
 			mFrame = new ScenarioEditorGUI("Scenario Editor", this);
 			mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
 			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			
+			
 			JFileChooser jfc = new JFileChooser();
 			returnVal = jfc.showOpenDialog(mFrame);
 			if(returnVal == 1) {
 				System.err.println(returnVal);
 			}
+			
 			String sfn = jfc.getCurrentDirectory() + "\\" + jfc.getSelectedFile().getName();
 			Document doc = dBuilder.parse(new File(sfn));			
 //			Document doc = dBuilder.parse(new File("C:\\MekHQ\\campaigns\\Solo\\Solo30270514.cpnx"));
+			
 			Element campaignEle = doc.getDocumentElement();
 	        NodeList nl = campaignEle.getChildNodes();
 	        campaignEle.normalize();
@@ -96,12 +109,80 @@ public class ScenarioEditor {
 		}
 	}
 	
+	
+	private void listOfScenarios() {
+		String[] s = new String[2];
+		s[0] = "AceDuel";
+		s[1] = "mekhq.campaign.mission.atb.scenario.AceDuelBuiltInScenario";
+		ScenarioNames.put(1,s);
+		s[0]="AlliedTraitors";
+		s[1] = "mekhq.campaign.mission.atb.scenario.AlliedTraitorsBuiltInScenario";
+		ScenarioNames.put(2,s);
+		s[0] ="AllyRescue";
+		s[1] = "mekhq.campaign.mission.atb.scenario.AllyRescueBuiltInScenario";
+		ScenarioNames.put(3,s);
+		s[0] = "Ambush";
+		s[1] ="mekhq.campaign.mission.atb.scenario.AmbushBuiltInScenario";
+		ScenarioNames.put(4,s);
+		s[0] = "BaseAttack";
+		s[1] = "mekhq.campaign.mission.atb.scenario.BaseAttackBuiltInScenario";
+		ScenarioNames.put(5,s);
+		s[0] = "Breakthrough";
+		s[1] = "mekhq.campaign.mission.atb.scenario.BreakthroughBuiltInScenario";
+		ScenarioNames.put(6,s);
+		s[0] = "Chase";
+		s[1] = "mekhq.campaign.mission.atb.scenario.ChaseBuiltInScenario";
+		ScenarioNames.put(7,s);
+		s[0] = "CivilianHelp";
+		s[1] ="mekhq.campaign.mission.atb.scenario.CivilianHelpBuiltInScenario";
+		ScenarioNames.put(8,s);
+		s[0] = "CivilianRiot";
+		s[1] = "mekhq.campaign.mission.atb.scenario.CivilianRiotBuiltInScenario";
+		ScenarioNames.put(9,s);
+		s[0] = "ConvoyAttack";
+		s[1] = "mekhq.campaign.mission.atb.scenario.ConvoyAttackBuiltInScenario";
+		ScenarioNames.put(10,s);
+		s[0] = "Extraction";
+		s[1] = "mekhq.campaign.mission.atb.scenario.ExtractionBuiltInScenario";
+		ScenarioNames.put(11,s);
+		s[0] = "HideAndSeek";
+		s[1] = "mekhq.campaign.mission.atb.scenario.HideAndSeekBuiltInScenario";
+		ScenarioNames.put(12,s);
+		s[0] = "HoldTheLine";
+		s[1] = "mekhq.campaign.mission.atb.scenario.HoldTheLineBuiltInScenario";
+		ScenarioNames.put(13,s);
+		s[0] = "OfficerDual";
+		s[1] = "mekhq.campaign.mission.atb.scenario.OfficerDualBuiltInScenario";
+		ScenarioNames.put(14,s);
+		s[0] = "PirateFreeForAll";
+		s[1] = "mekhq.campaign.mission.atb.scenario.PirateFreeForAllBuiltInScenario";
+		ScenarioNames.put(15,s);
+		s[0] = "PrisonBreak";
+		s[1] = "mekhq.campaign.mission.atb.scenario.PrisonBreakBuiltInScenario";
+		ScenarioNames.put(16,s);
+		s[0] = "Probe";
+		s[1] = "mekhq.campaign.mission.atb.scenario.ProbeBuiltInScenario";
+		ScenarioNames.put(17,s);
+		s[0] = "ReconRaid";
+		s[1] =  "mekhq.campaign.mission.atb.scenario.ReconRaidBuiltInScenario";
+		ScenarioNames.put(18,s);
+		s[0] = "StandUp";
+		s[1] = "mekhq.campaign.mission.atb.scenario.StandUpBuiltInScenario";
+		ScenarioNames.put(19,s);
+		s[0] = "StarLeagueCache1";
+		s[1] = "mekhq.campaign.mission.atb.scenario.StarLeagueCache1BuiltInScenario";
+		ScenarioNames.put(20,s);
+		s[0] = "StarLeagueCache2";
+		s[1] = "mekhq.campaign.mission.atb.scenario.StarLeagueCache2BuiltInScenario";
+		ScenarioNames.put(21,s);
+	}
+	
+	
 	/*
 	 * Process the Mission nodes in the campaign file
 	 */
 	private void processMissionNodes(Node wn){
         NodeList wList = wn.getChildNodes();
-        int cnt = 0;
 
         // iterate through the children,
         for (int x = 0; x < wList.getLength(); x++) {
@@ -115,7 +196,6 @@ public class ScenarioEditor {
             if (!wn2.getNodeName().equalsIgnoreCase("mission")) {
                 continue;
             }
-            cnt += 1;
             Mission m = new Mission();
             
             NamedNodeMap attrs = wn2.getAttributes();
@@ -154,6 +234,7 @@ public class ScenarioEditor {
                     System.out.println("+");
                 }                
                 System.out.println("Mission: \r\n" + m.toString());
+                missions.add(m);
             } catch (Exception ex) {
                 // Doh!
                 System.err.println( ex.toString() );
@@ -168,7 +249,6 @@ public class ScenarioEditor {
 	 */
 	private void processScenarioNodes(Node wn) {
         NodeList wList = wn.getChildNodes();
-        int cnt = 0;
 
         // iterate through the children,
         for (int x = 0; x < wList.getLength(); x++) {
@@ -182,7 +262,6 @@ public class ScenarioEditor {
             if (!wn2.getNodeName().equalsIgnoreCase("scenario")) {
                 continue;
             }
-            cnt += 1;
             Scenario m = new Scenario();
             
             NamedNodeMap attrs = wn2.getAttributes();
@@ -300,8 +379,7 @@ public class ScenarioEditor {
         NodeList wList = wn.getChildNodes();
         int cnt = 0;
         UUID id;
-        int oldId;
-        String chassis;
+
 
         // Okay, lets iterate through the children, eh?
         for (int x = 0; x < wList.getLength(); x++) {
@@ -357,7 +435,6 @@ public class ScenarioEditor {
 	 */
 	private void processPartNodes(Node wn) {
         NodeList wList = wn.getChildNodes();
-        int cnt = 0;
         String wpn = "";
         String unitId = ""; 
 
@@ -375,8 +452,6 @@ public class ScenarioEditor {
                 // Errr, what should we do here?
                 continue;
             }
-            
-            cnt += 1;
             NamedNodeMap attrs = wn2.getAttributes();
             Node idNode = attrs.getNamedItem("id");
         	//System.out.println("PARTS ID " +  idNode.getTextContent());                      

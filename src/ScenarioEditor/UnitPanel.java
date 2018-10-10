@@ -1,7 +1,7 @@
 package ScenarioEditor;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-import java.awt.Event;
+//import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
