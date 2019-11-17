@@ -1,3 +1,5 @@
+package com.MekHQ.ScenarioEdit;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
@@ -6,10 +8,11 @@ import java.awt.*;
 public class UnitPanel extends JPanel {
 	private JTextField uID = null;
 	private JTextField chassisType = null;
+	static final long serialVersionUID = 127898812;
 	
 	public UnitPanel() {
 		super();
-		JButton j = new JButton("TEST");	
+		JButton j = new JButton("UnitPanel");	
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
 		uID = new JTextField(10);
