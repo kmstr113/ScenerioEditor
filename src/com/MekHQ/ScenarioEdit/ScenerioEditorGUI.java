@@ -28,7 +28,7 @@ public class ScenerioEditorGUI extends JFrame{
 		jp.add(ip);
 		jp.add(jtpUnits);
 		jp.add(jtpScenarios);
-		
+	
 		
 		this.getContentPane().add(jp,BorderLayout.CENTER);
 		//this.getContentPane().add(ip,BorderLayout.CENTER);

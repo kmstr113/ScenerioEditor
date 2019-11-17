@@ -43,7 +43,7 @@ public class UnitPanel extends JPanel {
 	}
 	
 	public void setChassisType(String s) {
-		chassisType.setText(s);
+		chassisType.setText(s); 
 	}
 	
 }

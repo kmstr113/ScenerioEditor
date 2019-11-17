@@ -29,7 +29,7 @@ public class ScenarioPanel extends JPanel {
 	private JTextField Status = null;
 	private JTextField ID = null;
 	private JTextField calDate = null;
-
+	
 	/**
 	 * 
 	 */

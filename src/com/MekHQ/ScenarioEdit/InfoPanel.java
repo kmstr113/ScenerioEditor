@@ -17,7 +17,7 @@ public class InfoPanel extends JPanel {
 	private JTextField astechPool = null;
 	private JTextField medicPool = null;
 	private JTextField calDate = null;
-	
+ 
 	public InfoPanel() {
 		super();
 		JButton j = new JButton("InfoPanel");	

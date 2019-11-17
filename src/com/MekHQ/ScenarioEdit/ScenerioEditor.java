@@ -104,7 +104,7 @@ public class ScenerioEditor {
             //mFrame.getUnitPanel().setUID(id.toString());
             // Okay, now load Part-specific fields!
             NodeList nl = wn2.getChildNodes();
-
+ 
             try {
                 for (int y=0; y<nl.getLength(); y++) {
                     Node wn3 = nl.item(y);
