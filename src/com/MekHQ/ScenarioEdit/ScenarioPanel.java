@@ -3,16 +3,13 @@
  */
 package com.MekHQ.ScenarioEdit;
 
-
 import java.awt.GridLayout;
-
+import java.lang.Integer;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-//import javax.swing.border.EtchedBorder;
-//import java.awt.*;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
@@ -104,7 +101,13 @@ public class ScenarioPanel extends JPanel {
 	}
 	
 	public void setStatus(String s) {
-		Status.setText(s);
+		if(new Integer(s).intValue() == 1) {
+			Status.setText("Completed");
+		}else if(new Integer(s).intValue() == 0) {
+			Status.setText("Active");
+		}else {
+			Status.setText(s);
+		}
 		Status.setEditable(false);
 	}
 

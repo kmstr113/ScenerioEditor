@@ -2,9 +2,12 @@ package com.MekHQ.ScenarioEdit;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
+import java.awt.GridLayout;
 
-import java.awt.*;
-
+/**
+ * @author jhahn
+ *
+ */
 public class UnitPanel extends JPanel {
 	private JTextField uID = null;
 	private JTextField chassisType = null;

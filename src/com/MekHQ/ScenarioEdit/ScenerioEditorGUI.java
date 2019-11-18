@@ -1,20 +1,26 @@
 package com.MekHQ.ScenarioEdit;
 
-
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.BoxLayout;
-import java.awt.*;
+import java.awt.BorderLayout;
 
+/**
+ * @author jhahn
+ *
+ */
 public class ScenerioEditorGUI extends JFrame{
 	static final long serialVersionUID = 9882272;
 	private InfoPanel ip = null;
 	private JPanel jp = null;
 	private JTabbedPane jtpScenarios = null;
 	private JTabbedPane jtpUnits = null;
+	private ScenarioEditor SE = null;
 	
-	public ScenerioEditorGUI(String s) {
+	public ScenerioEditorGUI(String s, ScenarioEditor se) {
 		super(s);
+		SE = se;
 		this.setLayout(new BorderLayout());
 		this.setSize(800, 600);
 		ip = new InfoPanel();
@@ -36,6 +42,9 @@ public class ScenerioEditorGUI extends JFrame{
 		this.setVisible(true);
 	}
 	
+	public ScenarioEditor getScenarioEditor() {
+		return SE;
+	}
 	public JTabbedPane getTabbedUnitPanel() {
 		return jtpUnits;
 	}

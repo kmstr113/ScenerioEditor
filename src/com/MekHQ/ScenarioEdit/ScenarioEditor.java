@@ -2,37 +2,37 @@ package com.MekHQ.ScenarioEdit;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-//import javax.xml.parsers.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.NamedNodeMap;
-//import mekhq.campaign.unit.*;
 import mekhq.Version; 
-
-
-//import mekhq.campaign.Campaign;
-//import megamek.MegaMek;
-//import megameklab.com.*;
-//import java.io.FileInputStream;
+import java.io.File;
 import java.util.UUID;
-import java.io.*;
-import javax.swing.*;
+import javax.swing.WindowConstants;
+import javax.swing.JFileChooser;
 
-
-
-
-public class ScenerioEditor {
+/**
+ * @author jhahn
+ *
+ */
+public class ScenarioEditor {
 	ScenerioEditorGUI mFrame = null;
+	JFileChooser fc = null;
 	Version version = null;
+	File fle = null;
 	
-	public  ScenerioEditor() {
+	public  ScenarioEditor() {
 		try {			   
-			mFrame = new ScenerioEditorGUI("Scenerio Editor");
+			mFrame = new ScenerioEditorGUI("Scenerio Editor", this);
 			mFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			fc = new JFileChooser();
+			fc.showOpenDialog(mFrame);
+			fle = fc.getSelectedFile();
 			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document doc = dBuilder.parse(new File("C:\\temp\\MekHQ-0.46\\mekhq-windows-0.46.0\\campaigns\\Sedgwicks Scouts\\Sedgwicks Scouts30250709.cpnx"));
+			Document doc = dBuilder.parse(fle);
+//			Document doc = dBuilder.parse(new File("C:\\temp\\MekHQ-0.46\\mekhq-windows-0.46.0\\campaigns\\Sedgwicks Scouts\\Sedgwicks Scouts30250709.cpnx"));
 			Element campaignEle = doc.getDocumentElement();
 	        NodeList nl = campaignEle.getChildNodes();
 	        campaignEle.normalize();
@@ -138,6 +138,7 @@ public class ScenerioEditor {
 
             if (wn2.getNodeName().equalsIgnoreCase("name")) {
                 s = wn2.getTextContent();
+                //wn2.setTextContent("");
                 mFrame.getInfoPanel().setname(s);
             }
             if (wn2.getNodeName().equalsIgnoreCase("faction")) {
@@ -228,8 +229,6 @@ public class ScenerioEditor {
         mFrame.getTabbedScenarioPanel().add(sp);
     }	
 
-
-	
 	public static void printTags(Node nodes){
 		   //System.out.println("NODE_TYPE : " + nodes.getNodeType());
 	   if (nodes.hasAttributes()) {
@@ -255,7 +254,7 @@ public class ScenerioEditor {
 	}
 
 	public static void main(String[] args){
-		 new ScenerioEditor();
+		 new ScenarioEditor();
 	}   
 		   
 

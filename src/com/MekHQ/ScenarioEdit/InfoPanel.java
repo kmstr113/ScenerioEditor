@@ -7,8 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
-import java.awt.*;
+import java.awt.GridLayout;
 
+/**
+ * @author jhahn
+ *
+ */
 public class InfoPanel extends JPanel {
 	static final long serialVersionUID =  67867699;
 	private JTextField name = null;
